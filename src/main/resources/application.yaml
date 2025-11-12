@@ -1,3 +1,20 @@
 spring:
   application:
     name: smartlock
+  datasource:
+
+    url: jdbc:postgresql://localhost:5432/smartlock
+
+    username: postgres
+
+    password: 2006
+
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+    show-sql: true
+
+    hibernate:
+      ddl-auto: update
