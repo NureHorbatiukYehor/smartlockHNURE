@@ -1,8 +1,8 @@
-package com.example.smartlock.dto;
+package com.example.smartlock.dto.auth;
 
 public class LoginRequest {
     private String email;
-    private String passwordHash;
+    private String password;
 
     protected LoginRequest(){}
 
@@ -14,11 +14,11 @@ public class LoginRequest {
         this.email = email;
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
