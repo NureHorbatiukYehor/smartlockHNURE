@@ -14,21 +14,21 @@ public class AccessKeyController {
 
     @PostMapping
     public ResponseEntity<AccessKeyDto> createAccessKeey(@RequestBody CreateKeyRequest createKeyRequest, Authentication authentication) {
-        return null;
+        return ResponseEntity.ok(null);
     }
 
     @GetMapping
     public ResponseEntity<AccessKeyDto> getAllKeysOnUser(Authentication authentication) {
-        return null;
+        return ResponseEntity.ok(null);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<AccessKeyDto> getKeyById(@PathVariable UUID id, Authentication authentication) {
-        return null;
+        return ResponseEntity.ok(null);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<AccessKeyDto> deleteKeyById(@PathVariable UUID id, Authentication authentication) {
-        return null;
+        return ResponseEntity.ok(null);
     }
 }
