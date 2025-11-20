@@ -22,22 +22,22 @@ public class JwtService {
     @Value("${application.security.jwt.expiration}")
     private long jwtExpiration;
 
-    public String generateToken(String username){
-        return generateToken(new HashMap<>(), username);
+    public String generateToken(String email){
+        return generateToken(new HashMap<>(), email);
     }
 
-    public String generateToken(Map<String, Object> extraClaims, String username) {
+    public String generateToken(Map<String, Object> extraClaims, String email) {
         return Jwts.builder()
                 .setClaims(extraClaims)
-                .setSubject(username)
+                .setSubject(email)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    public boolean isTokenValid(String token, String username) {
-        return (username.equals(extractUsername(username)) && !isTokenExpired(token));
+    public boolean isTokenValid(String token, String email) {
+        return (email.equals(extractUsername(email)) && !isTokenExpired(token));
     }
 
     private boolean isTokenExpired(String token) {
