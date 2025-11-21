@@ -42,16 +42,11 @@ public class User {
 
     protected User() {}
 
-    public User(UUID userId, String email, String passwordHash, String fullName, OffsetDateTime createdAt, Set<Lock> locks, Set<AccessKey> accessKeys, Set<ActivityLog> activityLogs, Set<LockAccess> lockAccesses) {
-        this.userId = userId;
+    public User(String email, String passwordHash, String fullName, OffsetDateTime createdAt) {
         this.email = email;
         this.passwordHash = passwordHash;
         this.fullName = fullName;
         this.createdAt = createdAt;
-        this.locks = locks;
-        this.accessKeys = accessKeys;
-        this.activityLogs = activityLogs;
-        this.lockAccesses = lockAccesses;
     }
 
     public UUID getUserId() {

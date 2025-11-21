@@ -7,6 +7,12 @@ public class UserDto {
 
     protected UserDto() {}
 
+    public UserDto(String jwtToken, String email, String fullName) {
+        this.jwtToken = jwtToken;
+        this.email = email;
+        this.fullName = fullName;
+    }
+
     public String getJwtToken() {
         return jwtToken;
     }
