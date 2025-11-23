@@ -2,21 +2,34 @@ package com.example.smartlock.controller;
 
 import com.example.smartlock.dto.CreateLockRequest;
 import com.example.smartlock.dto.LockDto;
+import com.example.smartlock.entity.CustomUserDetails;
 import com.example.smartlock.entity.Lock;
+import com.example.smartlock.service.LockService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("api/locks")
 public class LockController {
+    private final LockService lockService;
+
+    public LockController(LockService lockService) {
+        this.lockService = lockService;
+    }
 
     @GetMapping
-    public ResponseEntity<Set<LockDto>> getAllLocksFromUser(Authentication authentication){
-        return ResponseEntity.ok(null);
+    public ResponseEntity<List<LockDto>> getAllLocksFromUser(Authentication authentication){
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        UUID userId = userDetails.getId();
+        List<LockDto> lockDtos = lockService.getAllLocksByUserId(userId);
+
+        return ResponseEntity.ok(lockDtos);
     }
 
     @PostMapping
