@@ -1,6 +1,7 @@
 package com.example.smartlock.controller;
 
 import com.example.smartlock.dto.CreateLockRequest;
+import com.example.smartlock.dto.EditLockRequest;
 import com.example.smartlock.dto.LockDto;
 import com.example.smartlock.entity.CustomUserDetails;
 import com.example.smartlock.entity.Lock;
@@ -24,7 +25,7 @@ public class LockController {
     }
 
     @GetMapping
-    public ResponseEntity<List<LockDto>> getAllLocksFromUser(Authentication authentication){
+    public ResponseEntity<List<LockDto>> getAllLocksByUserId(Authentication authentication){
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         UUID userId = userDetails.getId();
         List<LockDto> lockDtos = lockService.getAllLocksByUserId(userId);
@@ -33,28 +34,47 @@ public class LockController {
     }
 
     @PostMapping
-    public ResponseEntity<LockDto> createNewLock(@RequestBody CreateLockRequest createLockRequest, Authentication authentication) {
-        return ResponseEntity.ok(null);
+    public ResponseEntity<LockDto> createLock(@RequestBody CreateLockRequest createLockRequest, Authentication authentication) {
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        UUID userId = userDetails.getId();
+        LockDto lockDto = lockService.createLock(createLockRequest, userId);
+        return ResponseEntity.ok(lockDto);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<LockDto> deleteLock(@PathVariable UUID id, Authentication authentication) {
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        UUID userId = userDetails.getId();
+
+        lockService.deleteLock(id, userId);
         return ResponseEntity.ok(null);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<LockDto> editLock(@RequestBody LockDto lockDto, Authentication authentication) {
-        return ResponseEntity.ok(null);
+    public ResponseEntity<LockDto> editLock(@RequestBody EditLockRequest request, Authentication authentication) {
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        UUID userId = userDetails.getId();
+
+        LockDto lockDto = lockService.editLock(request, userId);
+        return ResponseEntity.ok(lockDto);
     }
 
     @PutMapping("/{id}/lock")
     public ResponseEntity<LockDto> lockLock(@PathVariable UUID id, Authentication authentication) {
-        return ResponseEntity.ok(null);
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        UUID userId = userDetails.getId();
+
+        LockDto lockDto = lockService.lockLock(id, userId);
+        return ResponseEntity.ok(lockDto);
     }
 
-    @PutMapping("/{id}/open")
+    @PutMapping("/{id}/unlock")
     public ResponseEntity<LockDto> unlockLock(@PathVariable UUID id, Authentication authentication) {
-        return ResponseEntity.ok(null);
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        UUID userId = userDetails.getId();
+
+        LockDto lockDto = lockService.unlockLock(id, userId);
+        return ResponseEntity.ok(lockDto);
     }
 
 

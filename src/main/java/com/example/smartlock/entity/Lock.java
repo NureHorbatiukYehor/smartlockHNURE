@@ -56,11 +56,8 @@ public class Lock {
     protected Lock() {
     }
 
-    public Lock(UUID lockId, User user, Set<AccessKey> accessKeys, Set<ActivityLog> activityLogs, String name, String serialNumber, String timezone, LockStatus status, boolean isLocked, OffsetDateTime lastHeartbeatAt, OffsetDateTime createdAt, Set<LockAccess> lockAccesses) {
-        this.lockId = lockId;
+    public Lock(User user, String name, String serialNumber, String timezone, LockStatus status, boolean isLocked, OffsetDateTime lastHeartbeatAt, OffsetDateTime createdAt) {
         this.user = user;
-        this.accessKeys = accessKeys;
-        this.activityLogs = activityLogs;
         this.name = name;
         this.serialNumber = serialNumber;
         this.timezone = timezone;
@@ -68,7 +65,6 @@ public class Lock {
         this.isLocked = isLocked;
         this.lastHeartbeatAt = lastHeartbeatAt;
         this.createdAt = createdAt;
-        this.lockAccesses = lockAccesses;
     }
 
     public UUID getLockId() {
