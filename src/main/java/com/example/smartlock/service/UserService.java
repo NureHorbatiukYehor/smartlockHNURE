@@ -20,8 +20,11 @@ public class UserService {
 
     public Optional<User> saveUser(User user) {
 
-
         return Optional.of(userRepository.save(user));
 
+    }
+
+    public Optional<User> getUserByEmail(String email) {
+        return (userRepository.findByEmail(email));
     }
 }
