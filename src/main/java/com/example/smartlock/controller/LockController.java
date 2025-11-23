@@ -37,11 +37,6 @@ public class LockController {
         return ResponseEntity.ok(null);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<LockDto> getLockById(@PathVariable UUID id, Authentication authentication){
-        return ResponseEntity.ok(null);
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<LockDto> deleteLock(@PathVariable UUID id, Authentication authentication) {
         return ResponseEntity.ok(null);
@@ -58,7 +53,7 @@ public class LockController {
     }
 
     @PutMapping("/{id}/open")
-    public ResponseEntity<LockDto> openLock(@PathVariable UUID id, Authentication authentication) {
+    public ResponseEntity<LockDto> unlockLock(@PathVariable UUID id, Authentication authentication) {
         return ResponseEntity.ok(null);
     }
 
