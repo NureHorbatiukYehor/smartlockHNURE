@@ -37,8 +37,9 @@ public class AuthService {
                 OffsetDateTime.now()
         );
 
-        if (userService.saveUser(user).isPresent()) {
-            String token = jwtService.generateToken(user.getEmail());
+        user = userService.saveUser(user).orElseThrow(() -> new RuntimeException()); //error saving user
+
+        String token = jwtService.generateToken(user.getEmail());
 
             return new AuthResponse(
                     user.getUserId(),
@@ -46,9 +47,7 @@ public class AuthService {
                     user.getEmail(),
                     user.getFullName()
             );
-        } else {
-            throw new RuntimeException();
-        }
+
 
     }
 
