@@ -1,5 +1,6 @@
 package com.example.smartlock.service;
 
+import com.example.smartlock.entity.CustomUserDetails;
 import com.example.smartlock.entity.User;
 import com.example.smartlock.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +30,7 @@ public class CustomUserDetailService implements UserDetailsService {
         List<SimpleGrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_USER"));
 
 
-        return new org.springframework.security.core.userdetails.User(
-                user.getEmail(),
-                user.getPasswordHash(),
-                authorities
-        );
+            return new CustomUserDetails(user);
+
     }
 }
