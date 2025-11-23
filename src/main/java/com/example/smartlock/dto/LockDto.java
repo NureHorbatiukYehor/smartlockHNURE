@@ -13,7 +13,13 @@ public class LockDto {
     private OffsetDateTime lastHeartBeatAt;
     private boolean isLocked;
 
-    protected LockDto() {}
+    public LockDto(UUID lockId, String name, LockStatus status, OffsetDateTime lastHeartBeatAt, boolean isLocked) {
+        this.lockId = lockId;
+        this.name = name;
+        this.status = status;
+        this.lastHeartBeatAt = lastHeartBeatAt;
+        this.isLocked = isLocked;
+    }
 
     public UUID getLockId() {
         return lockId;
