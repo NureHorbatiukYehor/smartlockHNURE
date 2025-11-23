@@ -1,5 +1,7 @@
 package com.example.smartlock.service;
 
+import com.example.smartlock.dto.auth.AuthResponse;
+import com.example.smartlock.dto.auth.LoginRequest;
 import com.example.smartlock.dto.auth.RegisterRequest;
 import com.example.smartlock.dto.auth.UserDto;
 import com.example.smartlock.entity.User;
@@ -24,7 +26,7 @@ public class AuthService {
         this.jwtService = jwtService;
     }
 
-    public UserDto registerUser(RegisterRequest request) {
+    public AuthResponse registerUser(RegisterRequest request) {
 
         String passwordHash = passwordEncoder.encode(request.getPassword());
 
@@ -35,19 +37,39 @@ public class AuthService {
                 OffsetDateTime.now()
         );
 
-        if (userService.saveUser(user).isPresent()){
+        if (userService.saveUser(user).isPresent()) {
             String token = jwtService.generateToken(user.getEmail());
 
-            UserDto userDto = new UserDto(
+            return new AuthResponse(
+                    user.getUserId(),
                     token,
                     user.getEmail(),
                     user.getFullName()
             );
-
-            return userDto;
         } else {
-            throw new RuntimeException() ;
+            throw new RuntimeException();
+        }
+
+    }
+
+    public AuthResponse loginUser(LoginRequest request) {
+        User user = userService.getUserByEmail(request.getEmail())
+                .orElseThrow(() -> new RuntimeException()); // no user with this email
+
+        if (passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
+            String token = jwtService.generateToken(user.getEmail());
+
+            return new AuthResponse(
+                    user.getUserId(),
+                    token,
+                    user.getEmail(),
+                    user.getFullName()
+            );
+        } else {
+            throw new RuntimeException(); // password dont matches
         }
 
     }
 }
+
+

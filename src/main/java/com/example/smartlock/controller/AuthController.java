@@ -1,5 +1,6 @@
 package com.example.smartlock.controller;
 
+import com.example.smartlock.dto.auth.AuthResponse;
 import com.example.smartlock.dto.auth.LoginRequest;
 import com.example.smartlock.dto.auth.RegisterRequest;
 import com.example.smartlock.dto.auth.UserDto;
@@ -14,13 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     @PostMapping("/register")
-    public ResponseEntity<UserDto> registerNewUser(@RequestBody RegisterRequest registerRequest){
+    public ResponseEntity<AuthResponse> registerNewUser(@RequestBody RegisterRequest registerRequest){
 
         return ResponseEntity.ok(null);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserDto> loginUser(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<AuthResponse> loginUser(@RequestBody LoginRequest loginRequest) {
         return ResponseEntity.ok(null);
     }
 
