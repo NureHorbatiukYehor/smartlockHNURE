@@ -4,20 +4,29 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 public class AccessKeyDto {
-    private UUID tokenId;
+    private UUID accessKeyId;
     private UUID lockId;
     private String accessToken;
     private boolean isActive;
+    private OffsetDateTime validFrom;
+    private OffsetDateTime validUntil;
 
 
-    protected AccessKeyDto() {}
-
-    public UUID getTokenId() {
-        return tokenId;
+    public AccessKeyDto(UUID accessKeyId, UUID lockId, String accessToken, boolean isActive, OffsetDateTime validFrom, OffsetDateTime validUntil) {
+        this.accessKeyId = accessKeyId;
+        this.lockId = lockId;
+        this.accessToken = accessToken;
+        this.isActive = isActive;
+        this.validFrom = validFrom;
+        this.validUntil = validUntil;
     }
 
-    public void setTokenId(UUID tokenId) {
-        this.tokenId = tokenId;
+    public UUID getaccessKeyId() {
+        return accessKeyId;
+    }
+
+    public void setaccessKeyId(UUID tokenId) {
+        this.accessKeyId = tokenId;
     }
 
     public UUID getLockId() {
@@ -42,5 +51,21 @@ public class AccessKeyDto {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    public OffsetDateTime getValidFrom() {
+        return validFrom;
+    }
+
+    public void setValidFrom(OffsetDateTime validFrom) {
+        this.validFrom = validFrom;
+    }
+
+    public OffsetDateTime getValidUntil() {
+        return validUntil;
+    }
+
+    public void setValidUntil(OffsetDateTime validUntil) {
+        this.validUntil = validUntil;
     }
 }

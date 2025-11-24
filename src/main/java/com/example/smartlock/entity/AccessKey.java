@@ -40,8 +40,7 @@ public class AccessKey {
 
     protected AccessKey(){}
 
-    public AccessKey(UUID accessKeyId, Lock lock, User createdByUser, String token, OffsetDateTime validFrom, OffsetDateTime validUntil, boolean isActive, OffsetDateTime createdAt) {
-        this.accessKeyId = accessKeyId;
+    public AccessKey(Lock lock, User createdByUser, String token, OffsetDateTime validFrom, OffsetDateTime validUntil, boolean isActive, OffsetDateTime createdAt) {
         this.lock = lock;
         this.createdByUser = createdByUser;
         this.token = token;
