@@ -4,7 +4,7 @@ import com.example.smartlock.enums.LockRole;
 
 import java.util.UUID;
 
-public class LockRoleRequest {
+public class LockAccessDto {
     private UUID lockID;
     private UUID userID;
     private LockRole lockRole;
