@@ -35,6 +35,11 @@ public class LockService {
         );
     };
 
+    public Lock getLockById(UUID lockId) {
+        return lockRepository.findById(lockId)
+                .orElseThrow(()-> new RuntimeException()); //no lock with such id
+    }
+
     public List<LockDto> getAllLocksByUserId(UUID userId){
         List<UUID> lockIds = lockAccessService.getLockIdsByUserId(userId);
         List<Lock> locks = new ArrayList<>();
