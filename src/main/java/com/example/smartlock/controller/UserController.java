@@ -17,20 +17,7 @@ public class UserController {
     }
 
 
-    @PostMapping("/role")
-    public ResponseEntity<LockRoleResponse> addUserToLock(@RequestBody LockRoleRequest lockRoleRequest, Authentication authentication) {
-        return ResponseEntity.ok(null);
-    }
 
-    @DeleteMapping("/role")
-    public ResponseEntity<LockRoleResponse> deleteUserFromLock(@RequestBody LockRoleRequest lockRoleRequest, Authentication authentication) {
-        return ResponseEntity.ok(null);
-    }
-
-    @PutMapping("/role")
-    public ResponseEntity<LockRoleResponse> changeUserLockRole(@RequestBody LockRoleRequest lockRoleRequest, Authentication authentication) {
-        return ResponseEntity.ok(null);
-    }
 
 
 
