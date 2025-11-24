@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/role")
-public class LockRoleController {
+public class LockAccessController {
     @PostMapping()
     public ResponseEntity<LockRoleResponse> addUserToLock(@RequestBody LockRoleRequest lockRoleRequest, Authentication authentication) {
         return ResponseEntity.ok(null);
