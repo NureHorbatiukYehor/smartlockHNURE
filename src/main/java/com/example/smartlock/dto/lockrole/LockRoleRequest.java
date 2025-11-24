@@ -1,4 +1,4 @@
-package com.example.smartlock.dto;
+package com.example.smartlock.dto.lockrole;
 
 import com.example.smartlock.enums.LockRole;
 

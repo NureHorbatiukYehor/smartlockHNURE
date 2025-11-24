@@ -1,18 +1,15 @@
 package com.example.smartlock.controller;
 
-import com.example.smartlock.dto.CreateLockRequest;
-import com.example.smartlock.dto.EditLockRequest;
-import com.example.smartlock.dto.LockDto;
+import com.example.smartlock.dto.lock.CreateLockRequest;
+import com.example.smartlock.dto.lock.EditLockRequest;
+import com.example.smartlock.dto.lock.LockDto;
 import com.example.smartlock.entity.CustomUserDetails;
-import com.example.smartlock.entity.Lock;
 import com.example.smartlock.service.LockService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @RestController

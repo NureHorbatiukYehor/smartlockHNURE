@@ -1,8 +1,8 @@
 package com.example.smartlock.service;
 
-import com.example.smartlock.dto.CreateLockRequest;
-import com.example.smartlock.dto.EditLockRequest;
-import com.example.smartlock.dto.LockDto;
+import com.example.smartlock.dto.lock.CreateLockRequest;
+import com.example.smartlock.dto.lock.EditLockRequest;
+import com.example.smartlock.dto.lock.LockDto;
 import com.example.smartlock.entity.Lock;
 import com.example.smartlock.enums.LockStatus;
 import com.example.smartlock.repository.LockRepository;

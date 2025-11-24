@@ -1,4 +1,4 @@
-package com.example.smartlock.dto;
+package com.example.smartlock.dto.lock;
 
 import java.util.UUID;
 
