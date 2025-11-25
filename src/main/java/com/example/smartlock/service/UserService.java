@@ -31,7 +31,7 @@ public class UserService {
         return (userRepository.findByEmail(email));
     }
 
-    public Optional<User> getUserById(UUID userId) {
-        return userRepository.findById(userId);
+    public User getUserById(UUID userId) {
+        return userRepository.findById(userId).orElseThrow(() -> new RuntimeException());
     }
 }

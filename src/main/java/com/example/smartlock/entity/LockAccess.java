@@ -24,7 +24,7 @@ public class LockAccess {
     @JoinColumn(name = "lock_id")
     private Lock lock;
 
-    @Column(name = "lock_role", nullable = false)
+    @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     private LockRole lockRole;
 
@@ -33,8 +33,7 @@ public class LockAccess {
 
     protected LockAccess(){}
 
-    public LockAccess(UUID accessId, User user, Lock lock, LockRole lockRole, OffsetDateTime createdAt) {
-        this.accessId = accessId;
+    public LockAccess(User user, Lock lock, LockRole lockRole, OffsetDateTime createdAt) {
         this.user = user;
         this.lock = lock;
         this.lockRole = lockRole;

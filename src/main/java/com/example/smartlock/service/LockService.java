@@ -16,16 +16,14 @@ import java.util.UUID;
 @Service
 public class LockService {
     LockRepository lockRepository;
-    LockAccessService lockAccessService;
     UserService userService;
 
-    public LockService(LockRepository lockRepository, LockAccessService lockAccessService, UserService userService) {
+    public LockService(LockRepository lockRepository, UserService userService) {
         this.lockRepository = lockRepository;
-        this.lockAccessService = lockAccessService;
         this.userService = userService;
     }
 
-    private LockDto fromLockToDto(Lock lock) {
+    public LockDto fromLockToDto(Lock lock) {
         return new LockDto(
                 lock.getLockId(),
                 lock.getName(),
@@ -40,24 +38,9 @@ public class LockService {
                 .orElseThrow(()-> new RuntimeException()); //no lock with such id
     }
 
-    public List<LockDto> getAllLocksByUserId(UUID userId){
-        List<UUID> lockIds = lockAccessService.getLockIdsByUserId(userId);
-        List<Lock> locks = new ArrayList<>();
-        List<LockDto> lockDtos = new ArrayList<>();
-
-        for (UUID lockId : lockIds) {
-            locks.add(lockRepository.findById(lockId).get());
-        }
-        for (Lock lock : locks) {
-            lockDtos.add(fromLockToDto(lock));
-        }
-
-        return lockDtos;
-    }
-
     public LockDto createLock(CreateLockRequest request, UUID userId){
         Lock lock = new Lock (
-                userService.getUserById(userId).get(),
+                userService.getUserById(userId),
                 request.getName(),
                 request.getSerialNumber(),
                 request.getTimezone(),
