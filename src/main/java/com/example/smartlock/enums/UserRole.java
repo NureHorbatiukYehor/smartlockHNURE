@@ -1,6 +1,6 @@
 package com.example.smartlock.enums;
 
-public enum LockRole {
+public enum UserRole {
     OWNER,
     ADMIN,
     MEMBER,

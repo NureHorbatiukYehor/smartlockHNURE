@@ -1,9 +1,9 @@
 package com.example.smartlock.controller;
 
-import com.example.smartlock.dto.lockrole.LockAccessDto;
+import com.example.smartlock.dto.lockrole.LockRoleDto;
 import com.example.smartlock.entity.CustomUserDetails;
-import com.example.smartlock.enums.LockRole;
-import com.example.smartlock.service.LockAccessService;
+import com.example.smartlock.enums.UserRole;
+import com.example.smartlock.service.LockRoleService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -12,23 +12,23 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/locks/{lockId}/roles/{userId}")
-public class LockAccessController {
-    LockAccessService lockAccessService;
+public class LockRoleController {
+    LockRoleService lockAccessService;
 
-    public LockAccessController(LockAccessService lockAccessService) {
+    public LockRoleController(LockRoleService lockAccessService) {
         this.lockAccessService = lockAccessService;
     }
 
     @PostMapping
-    public ResponseEntity<LockAccessDto> addUserToLock(
-            @RequestBody LockAccessDto lockRoleRequest,
+    public ResponseEntity<LockRoleDto> addUserToLock(
+            @RequestBody LockRoleDto lockRoleRequest,
             @PathVariable UUID lockId,
             @PathVariable UUID userId,
             Authentication authentication) {
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         UUID actorUserId = userDetails.getId();
 
-        LockAccessDto lockAccessDto = lockAccessService.addUserToLock(lockRoleRequest, lockId, userId, actorUserId);
+        LockRoleDto lockAccessDto = lockAccessService.addUserToLock(lockRoleRequest, lockId, userId, actorUserId);
         return ResponseEntity.ok(lockAccessDto);
     }
 
@@ -45,8 +45,8 @@ public class LockAccessController {
     }
 
     @PutMapping
-    public ResponseEntity<LockAccessDto> changeUserLockRole(
-            @RequestBody LockRole lockRole,
+    public ResponseEntity<LockRoleDto> changeUserLockRole(
+            @RequestBody UserRole lockRole,
             @PathVariable UUID lockId,
             @PathVariable UUID userId,
             Authentication authentication) {

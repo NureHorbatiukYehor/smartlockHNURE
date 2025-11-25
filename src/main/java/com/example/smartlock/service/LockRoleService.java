@@ -1,14 +1,12 @@
 package com.example.smartlock.service;
 
-import com.example.smartlock.dto.accesskey.AccessKeyDto;
 import com.example.smartlock.dto.lock.LockDto;
-import com.example.smartlock.dto.lockrole.LockAccessDto;
+import com.example.smartlock.dto.lockrole.LockRoleDto;
 import com.example.smartlock.entity.Lock;
-import com.example.smartlock.entity.LockAccess;
+import com.example.smartlock.entity.LockRole;
 import com.example.smartlock.entity.User;
-import com.example.smartlock.enums.LockRole;
-import com.example.smartlock.repository.LockAccessRepository;
-import com.example.smartlock.repository.LockRepository;
+import com.example.smartlock.enums.UserRole;
+import com.example.smartlock.repository.LockRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,20 +16,20 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class LockAccessService {
-    private final LockAccessRepository lockAccessRepository;
+public class LockRoleService {
+    private final LockRoleRepository lockAccessRepository;
     private final LockService lockService;
     private final UserService userService;
 
     @Autowired
-    public LockAccessService(LockAccessRepository lockAccessRepository, LockService lockService, UserService userService) {
+    public LockRoleService(LockRoleRepository lockAccessRepository, LockService lockService, UserService userService) {
         this.lockAccessRepository = lockAccessRepository;
         this.lockService = lockService;
         this.userService = userService;
     }
 
-    public LockAccessDto fromLockAccessToDto(LockAccess lockAccess) {
-        return new LockAccessDto(
+    public LockRoleDto fromLockAccessToDto(LockRole lockAccess) {
+        return new LockRoleDto(
                 lockAccess.getLock().getLockId(),
                 lockAccess.getUser().getUserId(),
                 lockAccess.getLockRole()
@@ -50,9 +48,9 @@ public class LockAccessService {
         return lockDtos;
     }
 
-    public LockAccessDto addUserToLock(LockAccessDto lockAccessDto, UUID userId, UUID lockId, UUID actorUserId) {
+    public LockRoleDto addUserToLock(LockRoleDto lockAccessDto, UUID userId, UUID lockId, UUID actorUserId) {
         //TODO check permissions
-        lockAccessRepository.save( new LockAccess(
+        lockAccessRepository.save( new LockRole(
                 userService.getUserById(userId),
                 lockService.getLockById(lockId),
                 lockAccessDto.getLockRole(),
@@ -70,14 +68,14 @@ public class LockAccessService {
         lockAccessRepository.deleteByUserAndLock(user, lock);
     }
 
-    public LockAccessDto changeUserLockRole(UUID userId, UUID lockId, UUID actorUserId, LockRole lockRole) {
+    public LockRoleDto changeUserLockRole(UUID userId, UUID lockId, UUID actorUserId, UserRole lockRole) {
         //TODO check permissions
         Lock lock = lockService.getLockById(lockId);
         User user = userService.getUserById(userId);
 
 
         return fromLockAccessToDto(
-                lockAccessRepository.save(new LockAccess(user, lock, lockRole, OffsetDateTime.now()))
+                lockAccessRepository.save(new LockRole(user, lock, lockRole, OffsetDateTime.now()))
         );
     }
 }

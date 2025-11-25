@@ -4,7 +4,6 @@ package com.example.smartlock.entity;
 import com.example.smartlock.enums.LockStatus;
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.Set;
 import java.util.UUID;
@@ -29,7 +28,7 @@ public class Lock {
     private Set<ActivityLog> activityLogs;
 
     @OneToMany(mappedBy = "lock")
-    private Set<LockAccess> lockAccesses;
+    private Set<LockRole> lockAccesses;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -155,11 +154,11 @@ public class Lock {
         this.createdAt = createdAt;
     }
 
-    public Set<LockAccess> getLockAccesses() {
+    public Set<LockRole> getLockAccesses() {
         return lockAccesses;
     }
 
-    public void setLockAccesses(Set<LockAccess> lockAccesses) {
+    public void setLockAccesses(Set<LockRole> lockAccesses) {
         this.lockAccesses = lockAccesses;
     }
 }

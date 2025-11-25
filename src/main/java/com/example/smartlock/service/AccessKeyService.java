@@ -5,7 +5,6 @@ import com.example.smartlock.dto.accesskey.CreateKeyRequest;
 import com.example.smartlock.entity.AccessKey;
 import com.example.smartlock.repository.AccessKeyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;

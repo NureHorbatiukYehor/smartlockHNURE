@@ -1,15 +1,15 @@
 package com.example.smartlock.dto.lockrole;
 
-import com.example.smartlock.enums.LockRole;
+import com.example.smartlock.enums.UserRole;
 
 import java.util.UUID;
 
-public class LockAccessDto {
+public class LockRoleDto {
     private UUID lockID;
     private UUID userID;
-    private LockRole lockRole;
+    private UserRole lockRole;
 
-    public LockAccessDto(UUID lockID, UUID userID, LockRole lockRole) {
+    public LockRoleDto(UUID lockID, UUID userID, UserRole lockRole) {
         this.lockID = lockID;
         this.userID = userID;
         this.lockRole = lockRole;
@@ -31,11 +31,11 @@ public class LockAccessDto {
         this.userID = userID;
     }
 
-    public LockRole getLockRole() {
+    public UserRole getLockRole() {
         return lockRole;
     }
 
-    public void setLockRole(LockRole lockRole) {
+    public void setLockRole(UserRole lockRole) {
         this.lockRole = lockRole;
     }
 }

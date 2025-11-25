@@ -4,7 +4,7 @@ import com.example.smartlock.dto.lock.CreateLockRequest;
 import com.example.smartlock.dto.lock.EditLockRequest;
 import com.example.smartlock.dto.lock.LockDto;
 import com.example.smartlock.entity.CustomUserDetails;
-import com.example.smartlock.service.LockAccessService;
+import com.example.smartlock.service.LockRoleService;
 import com.example.smartlock.service.LockService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -17,9 +17,9 @@ import java.util.UUID;
 @RequestMapping("api/locks")
 public class LockController {
     private final LockService lockService;
-    private final LockAccessService lockAccessService;
+    private final LockRoleService lockAccessService;
 
-    public LockController(LockService lockService, LockAccessService lockAccessService) {
+    public LockController(LockService lockService, LockRoleService lockAccessService) {
         this.lockService = lockService;
         this.lockAccessService = lockAccessService;
     }

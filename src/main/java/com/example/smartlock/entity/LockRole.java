@@ -1,16 +1,16 @@
 package com.example.smartlock.entity;
 
-import com.example.smartlock.enums.LockRole;
+import com.example.smartlock.enums.UserRole;
 import jakarta.persistence.*;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "lock_access",uniqueConstraints = {
+@Table(name = "lock_roles",uniqueConstraints = {
         @UniqueConstraint(columnNames = {"user_id", "lock_id"}
         )})
-public class LockAccess {
+public class LockRole {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name="access_id")
@@ -26,14 +26,14 @@ public class LockAccess {
 
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
-    private LockRole lockRole;
+    private UserRole lockRole;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private OffsetDateTime createdAt;
 
-    protected LockAccess(){}
+    protected LockRole(){}
 
-    public LockAccess(User user, Lock lock, LockRole lockRole, OffsetDateTime createdAt) {
+    public LockRole(User user, Lock lock, UserRole lockRole, OffsetDateTime createdAt) {
         this.user = user;
         this.lock = lock;
         this.lockRole = lockRole;
@@ -64,11 +64,11 @@ public class LockAccess {
         this.lock = lock;
     }
 
-    public LockRole getLockRole() {
+    public UserRole getLockRole() {
         return lockRole;
     }
 
-    public void setLockRole(LockRole lockRole) {
+    public void setLockRole(UserRole lockRole) {
         this.lockRole = lockRole;
     }
 
