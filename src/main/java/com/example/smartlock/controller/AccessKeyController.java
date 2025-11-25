@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("api/key-access")
+@RequestMapping("api/access-key")
 public class AccessKeyController {
 
     private final AccessKeyService accessKeyService;
@@ -21,36 +21,38 @@ public class AccessKeyController {
         this.accessKeyService = accessKeyService;
     }
 
-    @PostMapping
-    public ResponseEntity<AccessKeyDto> createAccessKey(@RequestBody CreateKeyRequest createKeyRequest, Authentication authentication) {
+    @PostMapping("/lock/{lockId}")
+    public ResponseEntity<AccessKeyDto> createAccessKey(@PathVariable UUID lockId, @RequestBody CreateKeyRequest createKeyRequest, Authentication authentication) {
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         UUID userId = userDetails.getId();
 
-        AccessKeyDto accessKeyDto = accessKeyService.createAccessKey(createKeyRequest, userId);
+        AccessKeyDto accessKeyDto = accessKeyService.createAccessKey(createKeyRequest, lockId, userId);
         return ResponseEntity.ok(accessKeyDto);
     }
 
-    @GetMapping
-    public ResponseEntity<List<AccessKeyDto>> getAllKeysOnUser(Authentication authentication) {
+    @GetMapping("/lock/{lockId}")
+    public ResponseEntity<List<AccessKeyDto>> getAllKeysOnLock(@PathVariable UUID lockId, Authentication authentication) {
+        //TODO check permissions
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         UUID userId = userDetails.getId();
 
-        List<AccessKeyDto> accessKeyDtos = accessKeyService.getAllKeysOnUser(userId);
+        List<AccessKeyDto> accessKeyDtos = accessKeyService.getAllKeysOnLock(lockId);
         return ResponseEntity.ok(accessKeyDtos);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<AccessKeyDto> getKeyById(@PathVariable UUID id) {
-        AccessKeyDto accessKeyDto = accessKeyService.getAccessKeyById(id);
+    @GetMapping("/{keyId}")
+    public ResponseEntity<AccessKeyDto> getKeyById(@PathVariable UUID keyId) {
+        AccessKeyDto accessKeyDto = accessKeyService.getAccessKeyById(keyId);
         return ResponseEntity.ok(accessKeyDto);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<AccessKeyDto> deleteKeyById(@PathVariable UUID id, Authentication authentication) {
+    @DeleteMapping("/{keyId}")
+    public ResponseEntity<AccessKeyDto> deleteKeyById(@PathVariable UUID keyId, Authentication authentication) {
+        //Todo check permisions
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         UUID userId = userDetails.getId();
 
-        accessKeyService.deleteAccessKeyById(id, userId);
+        accessKeyService.deleteAccessKeyById(keyId, userId);
         return ResponseEntity.ok(null);
     }
 }
