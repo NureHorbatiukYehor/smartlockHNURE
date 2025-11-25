@@ -1,4 +1,4 @@
-package com.example.smartlock.entity;
+package com.example.smartlock.model.entity;
 
 import jakarta.persistence.*;
 

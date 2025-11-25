@@ -1,8 +1,7 @@
-package com.example.smartlock.entity;
+package com.example.smartlock.model.entity;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 

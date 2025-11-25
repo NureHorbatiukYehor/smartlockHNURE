@@ -1,4 +1,4 @@
-package com.example.smartlock.dto.accesskey;
+package com.example.smartlock.model.dto.accesskey;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;

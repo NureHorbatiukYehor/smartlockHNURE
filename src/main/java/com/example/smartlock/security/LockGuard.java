@@ -1,6 +1,6 @@
 package com.example.smartlock.security;
 
-import com.example.smartlock.entity.CustomUserDetails;
+import com.example.smartlock.model.entity.CustomUserDetails;
 import com.example.smartlock.repository.LockRoleRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-@Component
+@Component("lockGuard")
 public class LockGuard {
     private final LockRoleRepository lockRoleRepository;
 
@@ -20,11 +20,14 @@ public class LockGuard {
 
     public boolean check(UUID lockId, String... allowedRoles) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
         UUID currentUserId = ((CustomUserDetails) auth.getPrincipal()).getId();
 
         List<String> allowedRoleList = Arrays.asList(allowedRoles);
 
-        return lockRoleRepository.existsByUserIdAndLockIdAndRoleIn(currentUserId, lockId, allowedRoleList);
+
+        boolean debug = lockRoleRepository.existsByUserUserIdAndLockLockIdAndLockRoleIn(currentUserId, lockId, allowedRoleList);
+        System.out.println("DEBUG: ID: " + currentUserId + " LOCK ID: " + lockId + " ALLOWED ROLES: " + allowedRoleList + " CHECK: " + debug);
+
+        return debug;
     }
 }

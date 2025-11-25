@@ -1,6 +1,6 @@
-package com.example.smartlock.dto.lockrole;
+package com.example.smartlock.model.dto.lockrole;
 
-import com.example.smartlock.enums.UserRole;
+import com.example.smartlock.model.enums.UserRole;
 
 import java.util.UUID;
 

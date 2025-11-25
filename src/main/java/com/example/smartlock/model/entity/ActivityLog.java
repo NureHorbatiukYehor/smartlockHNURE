@@ -1,10 +1,9 @@
-package com.example.smartlock.entity;
+package com.example.smartlock.model.entity;
 
-import com.example.smartlock.enums.ActionType;
+import com.example.smartlock.model.enums.ActionType;
 import jakarta.persistence.*;
 
 import java.math.BigInteger;
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
 @Entity

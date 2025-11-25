@@ -1,6 +1,6 @@
 package com.example.smartlock.controller;
 
-import com.example.smartlock.entity.User;
+import com.example.smartlock.model.entity.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

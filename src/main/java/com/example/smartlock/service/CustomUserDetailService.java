@@ -1,7 +1,7 @@
 package com.example.smartlock.service;
 
-import com.example.smartlock.entity.CustomUserDetails;
-import com.example.smartlock.entity.User;
+import com.example.smartlock.model.entity.CustomUserDetails;
+import com.example.smartlock.model.entity.User;
 import com.example.smartlock.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

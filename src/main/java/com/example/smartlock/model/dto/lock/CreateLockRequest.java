@@ -1,4 +1,4 @@
-package com.example.smartlock.dto.lock;
+package com.example.smartlock.model.dto.lock;
 
 public class CreateLockRequest {
     private String name;

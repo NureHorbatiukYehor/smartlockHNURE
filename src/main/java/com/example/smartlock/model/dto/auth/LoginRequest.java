@@ -1,4 +1,4 @@
-package com.example.smartlock.dto.auth;
+package com.example.smartlock.model.dto.auth;
 
 public class LoginRequest {
     private String email;

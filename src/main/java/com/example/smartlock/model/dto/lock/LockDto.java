@@ -1,6 +1,6 @@
-package com.example.smartlock.dto.lock;
+package com.example.smartlock.model.dto.lock;
 
-import com.example.smartlock.enums.LockStatus;
+import com.example.smartlock.model.enums.LockStatus;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;

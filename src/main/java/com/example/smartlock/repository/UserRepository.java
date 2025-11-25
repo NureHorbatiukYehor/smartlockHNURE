@@ -1,11 +1,9 @@
 package com.example.smartlock.repository;
 
-import com.example.smartlock.entity.User;
-import jakarta.persistence.Entity;
+import com.example.smartlock.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
 import java.util.UUID;
 

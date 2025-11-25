@@ -1,4 +1,4 @@
-package com.example.smartlock.enums;
+package com.example.smartlock.model.enums;
 
 public enum LockStatus {
     ONLINE,

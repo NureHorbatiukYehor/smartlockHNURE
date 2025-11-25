@@ -1,7 +1,7 @@
-package com.example.smartlock.entity;
+package com.example.smartlock.model.entity;
 
 
-import com.example.smartlock.enums.LockStatus;
+import com.example.smartlock.model.enums.LockStatus;
 import jakarta.persistence.*;
 
 import java.time.OffsetDateTime;

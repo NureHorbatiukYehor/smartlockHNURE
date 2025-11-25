@@ -1,11 +1,11 @@
 package com.example.smartlock.service;
 
-import com.example.smartlock.dto.lock.LockDto;
-import com.example.smartlock.dto.lockrole.LockRoleDto;
-import com.example.smartlock.entity.Lock;
-import com.example.smartlock.entity.LockRole;
-import com.example.smartlock.entity.User;
-import com.example.smartlock.enums.UserRole;
+import com.example.smartlock.model.dto.lock.LockDto;
+import com.example.smartlock.model.dto.lockrole.LockRoleDto;
+import com.example.smartlock.model.entity.Lock;
+import com.example.smartlock.model.entity.LockRole;
+import com.example.smartlock.model.entity.User;
+import com.example.smartlock.model.enums.UserRole;
 import com.example.smartlock.repository.LockRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

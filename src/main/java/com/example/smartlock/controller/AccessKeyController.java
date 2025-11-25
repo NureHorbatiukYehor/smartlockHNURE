@@ -1,10 +1,11 @@
 package com.example.smartlock.controller;
 
-import com.example.smartlock.dto.accesskey.AccessKeyDto;
-import com.example.smartlock.dto.accesskey.CreateKeyRequest;
-import com.example.smartlock.entity.CustomUserDetails;
+import com.example.smartlock.model.dto.accesskey.AccessKeyDto;
+import com.example.smartlock.model.dto.accesskey.CreateKeyRequest;
+import com.example.smartlock.model.entity.CustomUserDetails;
 import com.example.smartlock.service.AccessKeyService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,7 @@ public class AccessKeyController {
         this.accessKeyService = accessKeyService;
     }
 
+    @PreAuthorize("@lockGuard.check(#lockId, 'MEMBER', 'ADMIN', 'OWNER')")
     @PostMapping("/lock/{lockId}")
     public ResponseEntity<AccessKeyDto> createAccessKey(@PathVariable UUID lockId, @RequestBody CreateKeyRequest createKeyRequest, Authentication authentication) {
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
@@ -30,6 +32,7 @@ public class AccessKeyController {
         return ResponseEntity.ok(accessKeyDto);
     }
 
+    @PreAuthorize("@lockGuard.check(#lockId, 'ADMIN', 'OWNER')")
     @GetMapping("/lock/{lockId}")
     public ResponseEntity<List<AccessKeyDto>> getAllKeysOnLock(@PathVariable UUID lockId, Authentication authentication) {
         //TODO check permissions
@@ -46,6 +49,7 @@ public class AccessKeyController {
         return ResponseEntity.ok(accessKeyDto);
     }
 
+    @PreAuthorize("@lockGuard.check(#lockId, 'ADMIN', 'OWNER')")
     @DeleteMapping("/{keyId}")
     public ResponseEntity<AccessKeyDto> deleteKeyById(@PathVariable UUID keyId, Authentication authentication) {
         //Todo check permisions

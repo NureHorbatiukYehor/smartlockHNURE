@@ -1,17 +1,14 @@
 package com.example.smartlock.service;
 
-import com.example.smartlock.dto.auth.AuthResponse;
-import com.example.smartlock.dto.auth.LoginRequest;
-import com.example.smartlock.dto.auth.RegisterRequest;
-import com.example.smartlock.dto.auth.UserDto;
-import com.example.smartlock.entity.User;
+import com.example.smartlock.model.dto.auth.AuthResponse;
+import com.example.smartlock.model.dto.auth.LoginRequest;
+import com.example.smartlock.model.dto.auth.RegisterRequest;
+import com.example.smartlock.model.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
-import java.util.Optional;
 
 @Service
 public class AuthService {

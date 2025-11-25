@@ -1,7 +1,7 @@
 package com.example.smartlock.repository;
 
-import com.example.smartlock.entity.AccessKey;
-import com.example.smartlock.entity.Lock;
+import com.example.smartlock.model.entity.AccessKey;
+import com.example.smartlock.model.entity.Lock;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

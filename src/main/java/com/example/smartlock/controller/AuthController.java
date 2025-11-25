@@ -1,9 +1,8 @@
 package com.example.smartlock.controller;
 
-import com.example.smartlock.dto.auth.AuthResponse;
-import com.example.smartlock.dto.auth.LoginRequest;
-import com.example.smartlock.dto.auth.RegisterRequest;
-import com.example.smartlock.dto.auth.UserDto;
+import com.example.smartlock.model.dto.auth.AuthResponse;
+import com.example.smartlock.model.dto.auth.LoginRequest;
+import com.example.smartlock.model.dto.auth.RegisterRequest;
 import com.example.smartlock.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

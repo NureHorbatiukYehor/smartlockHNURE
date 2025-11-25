@@ -1,4 +1,4 @@
-package com.example.smartlock.filter;
+package com.example.smartlock.security.filter;
 
 import com.example.smartlock.service.CustomUserDetailService;
 import com.example.smartlock.service.JwtService;
@@ -39,16 +39,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         final String jwt;
         final String userEmail;
 
-        System.out.println("DEBUG - Raw Auth Header: " + authHeader);
-
         if(authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
 
         jwt = authHeader.substring(7).trim();
-
-        System.out.println("DEBUG - Extracted JWT: " + jwt);
 
         userEmail = jwtService.extractUsername(jwt);
 

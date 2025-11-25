@@ -1,15 +1,11 @@
 package com.example.smartlock.service;
 
-import com.example.smartlock.dto.auth.UserDto;
-import com.example.smartlock.entity.User;
+import com.example.smartlock.model.entity.User;
 import com.example.smartlock.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.time.OffsetDateTime;
 import java.util.Optional;
-import java.util.OptionalInt;
 import java.util.UUID;
 
 @Service

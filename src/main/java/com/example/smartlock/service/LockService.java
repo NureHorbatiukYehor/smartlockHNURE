@@ -1,16 +1,14 @@
 package com.example.smartlock.service;
 
-import com.example.smartlock.dto.lock.CreateLockRequest;
-import com.example.smartlock.dto.lock.EditLockRequest;
-import com.example.smartlock.dto.lock.LockDto;
-import com.example.smartlock.entity.Lock;
-import com.example.smartlock.enums.LockStatus;
+import com.example.smartlock.model.dto.lock.CreateLockRequest;
+import com.example.smartlock.model.dto.lock.EditLockRequest;
+import com.example.smartlock.model.dto.lock.LockDto;
+import com.example.smartlock.model.entity.Lock;
+import com.example.smartlock.model.enums.LockStatus;
 import com.example.smartlock.repository.LockRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Service

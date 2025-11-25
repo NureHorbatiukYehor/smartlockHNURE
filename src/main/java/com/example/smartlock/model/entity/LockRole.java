@@ -1,6 +1,6 @@
-package com.example.smartlock.entity;
+package com.example.smartlock.model.entity;
 
-import com.example.smartlock.enums.UserRole;
+import com.example.smartlock.model.enums.UserRole;
 import jakarta.persistence.*;
 
 import java.time.OffsetDateTime;
