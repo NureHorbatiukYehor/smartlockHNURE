@@ -39,10 +39,10 @@ public class AccessKeyService {
     }
 
     public AccessKeyDto createAccessKey(CreateKeyRequest request, UUID userId) {
-        String token = "";
+        String token = "token";
         AccessKey accessKey = new AccessKey(
                 lockService.getLockById(request.getLockId()),
-                userService.getUserById(userId).get(),
+                userService.getUserById(userId),
                 token,
                 request.getValidFrom(),
                 request.getValidUntil(),
@@ -54,7 +54,7 @@ public class AccessKeyService {
 
     public List<AccessKeyDto> getAllKeysOnUser(UUID userId) {
         List<AccessKeyDto> accessKeyDtos = new ArrayList<>();
-        List<AccessKey> accessKeys = accessKeyRepository.findAllByUser(userService.getUserById(userId).get());
+        List<AccessKey> accessKeys = accessKeyRepository.findAllByUser(userService.getUserById(userId));
 
         for (AccessKey accessKey : accessKeys) {
             accessKeyDtos.add(fromAccessKeyToDto(accessKey));

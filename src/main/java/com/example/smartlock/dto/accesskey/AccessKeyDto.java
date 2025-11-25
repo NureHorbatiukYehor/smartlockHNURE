@@ -21,12 +21,12 @@ public class AccessKeyDto {
         this.validUntil = validUntil;
     }
 
-    public UUID getaccessKeyId() {
+    public UUID getAccessKeyId() {
         return accessKeyId;
     }
 
-    public void setaccessKeyId(UUID tokenId) {
-        this.accessKeyId = tokenId;
+    public void setAccessKeyId(UUID accessKeyId) {
+        this.accessKeyId = accessKeyId;
     }
 
     public UUID getLockId() {

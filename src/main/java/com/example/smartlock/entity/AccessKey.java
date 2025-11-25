@@ -21,7 +21,7 @@ public class AccessKey {
 
     @ManyToOne
     @JoinColumn(name = "created_by_user_id")
-    private User createdByUser;
+    private User user;
 
     @Column(name = "access_token", updatable = false, unique = true, nullable = false)
     private String token;
@@ -40,9 +40,9 @@ public class AccessKey {
 
     protected AccessKey(){}
 
-    public AccessKey(Lock lock, User createdByUser, String token, OffsetDateTime validFrom, OffsetDateTime validUntil, boolean isActive, OffsetDateTime createdAt) {
+    public AccessKey(Lock lock, User user, String token, OffsetDateTime validFrom, OffsetDateTime validUntil, boolean isActive, OffsetDateTime createdAt) {
         this.lock = lock;
-        this.createdByUser = createdByUser;
+        this.user = user;
         this.token = token;
         this.validFrom = validFrom;
         this.validUntil = validUntil;
@@ -66,12 +66,12 @@ public class AccessKey {
         this.lock = lock;
     }
 
-    public User getCreatedByUser() {
-        return createdByUser;
+    public User getUser() {
+        return user;
     }
 
-    public void setCreatedByUser(User createdByUser) {
-        this.createdByUser = createdByUser;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getToken() {
