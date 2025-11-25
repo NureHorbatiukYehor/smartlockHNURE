@@ -48,7 +48,7 @@ public class LockRoleService {
         return lockDtos;
     }
 
-    public LockRoleDto addUserToLock(UserRole userRole, UUID userId, UUID lockId, UUID actorUserId) {
+    public LockRoleDto addUserToLock(UserRole userRole, UUID userId, UUID lockId) {
         //TODO check permissions
         return fromLockRoleToDto(
                 lockRoleRepository.save( new LockRole(
@@ -61,7 +61,7 @@ public class LockRoleService {
         );
     }
 
-    public void deleteUserFromLock(UUID userId, UUID lockId, UUID actorUserId) {
+    public void deleteUserFromLock(UUID userId, UUID lockId) {
         //TODO check permissions
         Lock lock = lockService.getLockById(lockId);
         User user = userService.getUserById(userId);
@@ -69,7 +69,7 @@ public class LockRoleService {
         lockRoleRepository.deleteByUserAndLock(user, lock);
     }
 
-    public LockRoleDto changeUserLockRole(UUID userId, UUID lockId, UUID actorUserId, UserRole userRole) {
+    public LockRoleDto changeUserLockRole(UUID userId, UUID lockId, UserRole userRole) {
         //TODO check permissions
         Lock lock = lockService.getLockById(lockId);
         User user = userService.getUserById(userId);

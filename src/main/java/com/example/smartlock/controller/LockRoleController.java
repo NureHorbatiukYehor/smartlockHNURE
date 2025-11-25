@@ -23,24 +23,15 @@ public class LockRoleController {
     public ResponseEntity<LockRoleDto> addUserToLock(
             @RequestBody UserRole userRole,
             @PathVariable UUID lockId,
-            @PathVariable UUID userId,
-            Authentication authentication) {
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        UUID actorUserId = userDetails.getId();
+            @PathVariable UUID userId) {
 
-        LockRoleDto lockAccessDto = lockAccessService.addUserToLock(userRole, lockId, userId, actorUserId);
+        LockRoleDto lockAccessDto = lockAccessService.addUserToLock(userRole, lockId, userId);
         return ResponseEntity.ok(lockAccessDto);
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> deleteUserFromLock(
-            @PathVariable UUID lockId,
-            @PathVariable UUID userId,
-            Authentication authentication) {
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        UUID actorUserId = userDetails.getId();
-
-        lockAccessService.deleteUserFromLock(userId, lockId, actorUserId);
+    public ResponseEntity<Void> deleteUserFromLock( @PathVariable UUID lockId, @PathVariable UUID userId) {
+        lockAccessService.deleteUserFromLock(userId, lockId);
         return ResponseEntity.ok(null);
     }
 
@@ -48,12 +39,10 @@ public class LockRoleController {
     public ResponseEntity<LockRoleDto> changeUserLockRole(
             @RequestBody UserRole lockRole,
             @PathVariable UUID lockId,
-            @PathVariable UUID userId,
-            Authentication authentication) {
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        UUID actorUserId = userDetails.getId();
+            @PathVariable UUID userId) {
 
-       LockRoleDto lockRoleDto = lockAccessService.changeUserLockRole(userId, lockId, actorUserId, lockRole);
+
+       LockRoleDto lockRoleDto = lockAccessService.changeUserLockRole(userId, lockId, lockRole);
         return ResponseEntity.ok(lockRoleDto);
     }
 }
