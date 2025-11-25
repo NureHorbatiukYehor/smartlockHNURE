@@ -21,14 +21,14 @@ public class LockRoleController {
 
     @PostMapping
     public ResponseEntity<LockRoleDto> addUserToLock(
-            @RequestBody LockRoleDto lockRoleRequest,
+            @RequestBody UserRole userRole,
             @PathVariable UUID lockId,
             @PathVariable UUID userId,
             Authentication authentication) {
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         UUID actorUserId = userDetails.getId();
 
-        LockRoleDto lockAccessDto = lockAccessService.addUserToLock(lockRoleRequest, lockId, userId, actorUserId);
+        LockRoleDto lockAccessDto = lockAccessService.addUserToLock(userRole, lockId, userId, actorUserId);
         return ResponseEntity.ok(lockAccessDto);
     }
 
@@ -53,7 +53,7 @@ public class LockRoleController {
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         UUID actorUserId = userDetails.getId();
 
-        lockAccessService.changeUserLockRole(userId, lockId, actorUserId, lockRole);
-        return ResponseEntity.ok(null);
+       LockRoleDto lockRoleDto = lockAccessService.changeUserLockRole(userId, lockId, actorUserId, lockRole);
+        return ResponseEntity.ok(lockRoleDto);
     }
 }

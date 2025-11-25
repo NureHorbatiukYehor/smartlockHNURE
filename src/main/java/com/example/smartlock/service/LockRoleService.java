@@ -17,18 +17,18 @@ import java.util.UUID;
 
 @Service
 public class LockRoleService {
-    private final LockRoleRepository lockAccessRepository;
+    private final LockRoleRepository lockRoleRepository;
     private final LockService lockService;
     private final UserService userService;
 
     @Autowired
     public LockRoleService(LockRoleRepository lockAccessRepository, LockService lockService, UserService userService) {
-        this.lockAccessRepository = lockAccessRepository;
+        this.lockRoleRepository = lockAccessRepository;
         this.lockService = lockService;
         this.userService = userService;
     }
 
-    public LockRoleDto fromLockAccessToDto(LockRole lockAccess) {
+    public LockRoleDto fromLockRoleToDto(LockRole lockAccess) {
         return new LockRoleDto(
                 lockAccess.getLock().getLockId(),
                 lockAccess.getUser().getUserId(),
@@ -38,7 +38,7 @@ public class LockRoleService {
 
 
     public List<LockDto> getAllLocksByUserId(UUID userId){
-        List<Lock> locks = lockAccessRepository.findAllLockByUser(userService.getUserById(userId));
+        List<Lock> locks = lockRoleRepository.findAllLockByUser(userService.getUserById(userId));
         List<LockDto> lockDtos = new ArrayList<>();
 
         for (Lock lock : locks) {
@@ -48,16 +48,17 @@ public class LockRoleService {
         return lockDtos;
     }
 
-    public LockRoleDto addUserToLock(LockRoleDto lockAccessDto, UUID userId, UUID lockId, UUID actorUserId) {
+    public LockRoleDto addUserToLock(UserRole userRole, UUID userId, UUID lockId, UUID actorUserId) {
         //TODO check permissions
-        lockAccessRepository.save( new LockRole(
-                userService.getUserById(userId),
-                lockService.getLockById(lockId),
-                lockAccessDto.getLockRole(),
-                OffsetDateTime.now()
+        return fromLockRoleToDto(
+                lockRoleRepository.save( new LockRole(
+                                userService.getUserById(userId),
+                                lockService.getLockById(lockId),
+                                userRole,
+                                OffsetDateTime.now()
+                        )
                 )
         );
-        return lockAccessDto;
     }
 
     public void deleteUserFromLock(UUID userId, UUID lockId, UUID actorUserId) {
@@ -65,17 +66,19 @@ public class LockRoleService {
         Lock lock = lockService.getLockById(lockId);
         User user = userService.getUserById(userId);
 
-        lockAccessRepository.deleteByUserAndLock(user, lock);
+        lockRoleRepository.deleteByUserAndLock(user, lock);
     }
 
-    public LockRoleDto changeUserLockRole(UUID userId, UUID lockId, UUID actorUserId, UserRole lockRole) {
+    public LockRoleDto changeUserLockRole(UUID userId, UUID lockId, UUID actorUserId, UserRole userRole) {
         //TODO check permissions
         Lock lock = lockService.getLockById(lockId);
         User user = userService.getUserById(userId);
 
+        LockRole lockRole = lockRoleRepository.findByLockAndUser(lock, user);
+        lockRole.setLockRole(userRole);
 
-        return fromLockAccessToDto(
-                lockAccessRepository.save(new LockRole(user, lock, lockRole, OffsetDateTime.now()))
+        return fromLockRoleToDto(
+                lockRoleRepository.save(lockRole)
         );
     }
 }

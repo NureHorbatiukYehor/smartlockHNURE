@@ -12,5 +12,6 @@ import java.util.UUID;
 @Repository
 public interface LockRoleRepository extends JpaRepository <LockRole, UUID>{
     List<Lock> findAllLockByUser(User user);
+    LockRole findByLockAndUser(Lock lock, User user);
     public void deleteByUserAndLock(User user, Lock lock);
 }
