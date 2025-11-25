@@ -1,5 +1,6 @@
 package com.example.smartlock.service;
 
+import com.example.smartlock.exceptions.exception.LockNotFoundException;
 import com.example.smartlock.model.dto.lock.CreateLockRequest;
 import com.example.smartlock.model.dto.lock.EditLockRequest;
 import com.example.smartlock.model.dto.lock.LockDto;
@@ -33,7 +34,7 @@ public class LockService {
 
     public Lock getLockById(UUID lockId) {
         return lockRepository.findById(lockId)
-                .orElseThrow(()-> new RuntimeException()); //no lock with such id
+                .orElseThrow(()-> new LockNotFoundException("No lock with such id"));
     }
 
     public LockDto createLock(CreateLockRequest request, UUID userId){
@@ -55,12 +56,10 @@ public class LockService {
     }
 
     public void deleteLock(UUID id, UUID userId){
-        //TODO check permission == OWNER
         lockRepository.deleteById(id);
     }
 
     public LockDto editLock(EditLockRequest request, UUID userId){
-        //TODO check permission == OWNER or ADMIN
         Lock lock = lockRepository.findById(request.getLockId()).get();
         lock.setName(request.getName());
 
@@ -71,7 +70,6 @@ public class LockService {
 
 
     public LockDto lockLock(UUID lockId, UUID userId) {
-        //TODO check permissions
         //TODO IoT client
         Lock lock = lockRepository.findById(lockId).get();
         lock.setLocked(true);
@@ -82,7 +80,6 @@ public class LockService {
     }
 
     public LockDto unlockLock(UUID lockId, UUID userId) {
-        //TODO check permissions
         //TODO IoT client
         Lock lock = lockRepository.findById(lockId).get();
         lock.setLocked(false);

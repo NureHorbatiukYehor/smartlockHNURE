@@ -1,5 +1,6 @@
 package com.example.smartlock.service;
 
+import com.example.smartlock.exceptions.exception.AccessKeyNotFoundException;
 import com.example.smartlock.model.dto.accesskey.AccessKeyDto;
 import com.example.smartlock.model.dto.accesskey.CreateKeyRequest;
 import com.example.smartlock.model.entity.AccessKey;
@@ -62,7 +63,8 @@ public class AccessKeyService {
     }
 
     public AccessKeyDto getAccessKeyById(UUID id) {
-        return fromAccessKeyToDto(accessKeyRepository.findById(id).get());
+        return fromAccessKeyToDto(accessKeyRepository.findById(id).orElseThrow(()
+                -> new AccessKeyNotFoundException("No access key with such id")));
     }
 
     public void deleteAccessKeyById(UUID id, UUID userId) {

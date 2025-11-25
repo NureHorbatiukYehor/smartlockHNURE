@@ -28,6 +28,6 @@ public class UserService {
     }
 
     public User getUserById(UUID userId) {
-        return userRepository.findById(userId).orElseThrow(() -> new RuntimeException());
+        return userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found."));
     }
 }

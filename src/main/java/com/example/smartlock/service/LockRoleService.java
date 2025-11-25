@@ -49,7 +49,6 @@ public class LockRoleService {
     }
 
     public LockRoleDto addUserToLock(UserRole userRole, UUID userId, UUID lockId) {
-        //TODO check permissions
         return fromLockRoleToDto(
                 lockRoleRepository.save( new LockRole(
                                 userService.getUserById(userId),
