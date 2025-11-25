@@ -37,7 +37,7 @@ public class JwtService {
     }
 
     public boolean isTokenValid(String token, String email) {
-        return (email.equals(extractUsername(email)) && !isTokenExpired(token));
+        return (email.equals(extractUsername(token)) && !isTokenExpired(token));
     }
 
     private boolean isTokenExpired(String token) {
@@ -62,7 +62,7 @@ public class JwtService {
                 .parserBuilder()
                 .setSigningKey(getSignInKey())
                 .build()
-                .parseClaimsJwt(token)
+                .parseClaimsJws(token)
                 .getBody();
     }
 

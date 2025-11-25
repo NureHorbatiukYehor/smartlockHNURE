@@ -3,7 +3,7 @@ spring:
     name: smartlock
   security:
     jwt:
-      secret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      secret: Z2tzZG9qZ21kc3BvZ2pzcG9namtkczlnZTNyeWRhc2Q7YXNwazMyMTQwb3Jqa3dlZ2lwbmRza2ZhcztsZGthc3Bkb2FzbGRwYXNsZA==
       expiration: 86400000
 
   datasource:

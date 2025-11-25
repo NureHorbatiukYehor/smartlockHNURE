@@ -1,4 +1,4 @@
-package com.example.smartlock;
+package com.example.smartlock.config;
 
 import com.example.smartlock.filter.JwtAuthFilter;
 import com.example.smartlock.service.CustomUserDetailService;
@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,7 +34,10 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/auth/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

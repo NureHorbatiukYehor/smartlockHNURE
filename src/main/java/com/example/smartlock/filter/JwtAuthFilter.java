@@ -1,6 +1,5 @@
 package com.example.smartlock.filter;
 
-import com.example.smartlock.SecurityConfig;
 import com.example.smartlock.service.CustomUserDetailService;
 import com.example.smartlock.service.JwtService;
 import jakarta.servlet.FilterChain;
@@ -13,7 +12,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -41,12 +39,17 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         final String jwt;
         final String userEmail;
 
+        System.out.println("DEBUG - Raw Auth Header: " + authHeader);
+
         if(authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        jwt = authHeader.substring(7);
+        jwt = authHeader.substring(7).trim();
+
+        System.out.println("DEBUG - Extracted JWT: " + jwt);
+
         userEmail = jwtService.extractUsername(jwt);
 
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
