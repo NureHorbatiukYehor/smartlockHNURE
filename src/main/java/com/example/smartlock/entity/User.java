@@ -31,7 +31,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<Lock> locks;
 
-    @OneToMany(mappedBy = "createdByUser")
+    @OneToMany(mappedBy = "user")
     private Set<AccessKey> accessKeys;
 
     @OneToMany(mappedBy = "actorUser")
