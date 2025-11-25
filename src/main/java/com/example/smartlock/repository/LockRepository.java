@@ -10,5 +10,4 @@ import java.util.UUID;
 
 @Repository
 public interface LockRepository extends JpaRepository<Lock, UUID> {
-    public List<Lock> findAllByUserId(UUID userId);
 }
