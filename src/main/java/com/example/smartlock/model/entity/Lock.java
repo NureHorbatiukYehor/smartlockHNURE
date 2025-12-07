@@ -52,10 +52,13 @@ public class Lock {
     @Column(name="created_at", nullable = false, updatable = false)
     private OffsetDateTime createdAt;
 
+    @Column(name="secret_key", nullable = false, updatable = false)
+    private String SecretKey;
+
     protected Lock() {
     }
 
-    public Lock(User user, String name, String serialNumber, String timezone, LockStatus status, boolean isLocked, OffsetDateTime lastHeartbeatAt, OffsetDateTime createdAt) {
+    public Lock(User user, String name, String serialNumber, String timezone, LockStatus status, boolean isLocked, OffsetDateTime lastHeartbeatAt, OffsetDateTime createdAt, String secretKey) {
         this.user = user;
         this.name = name;
         this.serialNumber = serialNumber;
@@ -64,6 +67,7 @@ public class Lock {
         this.isLocked = isLocked;
         this.lastHeartbeatAt = lastHeartbeatAt;
         this.createdAt = createdAt;
+        this.SecretKey = secretKey;
     }
 
     public UUID getLockId() {
@@ -160,5 +164,13 @@ public class Lock {
 
     public void setLockAccesses(Set<LockRole> lockAccesses) {
         this.lockAccesses = lockAccesses;
+    }
+
+    public String getSecretKey() {
+        return SecretKey;
+    }
+
+    public void setSecretKey(String secretKey) {
+        SecretKey = secretKey;
     }
 }
