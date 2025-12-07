@@ -76,22 +76,22 @@ public class LockController {
     }
 
     @PreAuthorize("@lockGuard.checkLockSecret(#lockId)")
-    @PutMapping("/{lockId}/{secretKey}/lock")
-    public ResponseEntity<Void> lockBySecret(@PathVariable UUID lockId, @PathVariable String secretKey, @RequestBody String status) {
+    @PutMapping("/{lockId}/secret/lock")
+    public ResponseEntity<Void> lockBySecret(@PathVariable UUID lockId) {
         lockService.lockLock(lockId);
         return ResponseEntity.noContent().build();
     }
 
     @PreAuthorize("@lockGuard.checkLockSecret(#lockId)")
-    @PutMapping("/{lockId}/{secretKey}/unlock")
-    public ResponseEntity<Void> unlockBySecret(@PathVariable UUID lockId, @PathVariable String secretKey, @RequestBody String status) {
+    @PutMapping("/{lockId}/secret/unlock")
+    public ResponseEntity<Void> unlockBySecret(@PathVariable UUID lockId) {
         lockService.unlockLock(lockId);
         return ResponseEntity.noContent().build();
     }
 
     @PreAuthorize("@lockGuard.checkLockSecret(#lockId)")
-    @PutMapping("/{lockId}/{secretKey}/heartbeat")
-    public ResponseEntity<Void> updateHeartbeat(@PathVariable UUID lockId, @PathVariable String secretKey) {
+    @PutMapping("/{lockId}/heartbeat")
+    public ResponseEntity<Void> updateHeartbeat(@PathVariable UUID lockId) {
         lockService.updateHeartbeat(lockId);
         return ResponseEntity.noContent().build();
     }
