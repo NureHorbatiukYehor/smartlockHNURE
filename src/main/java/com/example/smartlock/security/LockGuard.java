@@ -3,6 +3,9 @@ package com.example.smartlock.security;
 import com.example.smartlock.model.entity.CustomUserDetails;
 import com.example.smartlock.repository.LockRepository;
 import com.example.smartlock.repository.LockRoleRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -15,10 +18,13 @@ import java.util.UUID;
 public class LockGuard {
     private final LockRoleRepository lockRoleRepository;
     private final LockRepository lockRepository;
+    private final HttpServletRequest request;
 
-    public LockGuard(LockRoleRepository lockRoleRepository, LockRepository lockRepository) {
+    @Autowired
+    public LockGuard(LockRoleRepository lockRoleRepository, LockRepository lockRepository, HttpServletRequest request) {
         this.lockRoleRepository = lockRoleRepository;
         this.lockRepository = lockRepository;
+        this.request = request;
     }
 
     public boolean check(UUID lockId, String... allowedRoles) {
@@ -34,7 +40,10 @@ public class LockGuard {
         return debug;
     }
 
-    public boolean checkLockSecret(UUID lockId, String secretKey) {
-        return lockRepository.existsByLockIdAndSecretKey(lockId, secretKey);
+    public boolean checkLockSecret(UUID lockId) {
+        String incomingSecret = request.getHeader("Device-Secret");
+        if (incomingSecret == null || incomingSecret.isBlank()) return false;
+
+        return lockRepository.existsByLockIdAndSecretKey(lockId, incomingSecret);
     }
 }

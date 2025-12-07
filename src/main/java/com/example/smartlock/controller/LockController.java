@@ -75,24 +75,24 @@ public class LockController {
         return ResponseEntity.ok(lockDto);
     }
 
-    @PreAuthorize("@lockGuard.checkLockSecret(#lockId, #secretKey)")
+    @PreAuthorize("@lockGuard.checkLockSecret(#lockId)")
     @PutMapping("/{lockId}/{secretKey}/lock")
     public ResponseEntity<Void> lockBySecret(@PathVariable UUID lockId, @PathVariable String secretKey, @RequestBody String status) {
-        LockDto lockDto = lockService.lockLock(lockId);
-        return ResponseEntity.ok(null);
+        lockService.lockLock(lockId);
+        return ResponseEntity.noContent().build();
     }
 
-    @PreAuthorize("@lockGuard.checkLockSecret(#lockId, #secretKey)")
+    @PreAuthorize("@lockGuard.checkLockSecret(#lockId)")
     @PutMapping("/{lockId}/{secretKey}/unlock")
     public ResponseEntity<Void> unlockBySecret(@PathVariable UUID lockId, @PathVariable String secretKey, @RequestBody String status) {
-        LockDto lockDto = lockService.unlockLock(lockId);
-        return ResponseEntity.ok(null);
+        lockService.unlockLock(lockId);
+        return ResponseEntity.noContent().build();
     }
 
-    @PreAuthorize("@lockGuard.checkLockSecret(#lockId, #secretKey)")
+    @PreAuthorize("@lockGuard.checkLockSecret(#lockId)")
     @PutMapping("/{lockId}/{secretKey}/heartbeat")
     public ResponseEntity<Void> updateHeartbeat(@PathVariable UUID lockId, @PathVariable String secretKey) {
         lockService.updateHeartbeat(lockId);
-        return ResponseEntity.ok(null);
+        return ResponseEntity.noContent().build();
     }
 }

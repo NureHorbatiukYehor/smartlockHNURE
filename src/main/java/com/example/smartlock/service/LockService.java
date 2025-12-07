@@ -89,7 +89,6 @@ public class LockService {
     public LockDto lockLock(UUID lockId) {
         Lock lock = lockRepository.findById(lockId).get();
         lock.setLocked(true);
-        lock.setLastHeartbeatAt(OffsetDateTime.now());
         return fromLockToDto(
                 lockRepository.save(lock)
         );
@@ -98,7 +97,6 @@ public class LockService {
     public LockDto unlockLock(UUID lockId) {
         Lock lock = lockRepository.findById(lockId).get();
         lock.setLocked(false);
-        lock.setLastHeartbeatAt(OffsetDateTime.now());
         return fromLockToDto(
                 lockRepository.save(lock)
         );
