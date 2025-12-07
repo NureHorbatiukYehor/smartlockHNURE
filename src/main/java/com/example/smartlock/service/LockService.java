@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
+import java.security.SecureRandom;
 
 @Service
 public class LockService {
@@ -33,6 +34,19 @@ public class LockService {
         );
     };
 
+    public static String generateRandomString(int length) {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        SecureRandom random = new SecureRandom();
+        StringBuilder sb = new StringBuilder(length);
+
+        for (int i = 0; i < length; i++) {
+            int randomIndex = random.nextInt(chars.length());
+            sb.append(chars.charAt(randomIndex));
+        }
+
+        return sb.toString();
+    }
+
     public Lock getLockById(UUID lockId) {
         return lockRepository.findById(lockId)
                 .orElseThrow(()-> new LockNotFoundException("No lock with such id"));
@@ -47,7 +61,8 @@ public class LockService {
                 LockStatus.ONLINE,
                 false,
                 OffsetDateTime.now(),
-                OffsetDateTime.now()
+                OffsetDateTime.now(),
+                generateRandomString(32)
         );
 
         return fromLockToDto(
