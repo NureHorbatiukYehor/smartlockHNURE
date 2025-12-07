@@ -50,14 +50,4 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleException(Exception e) {
-
-        System.out.println("DEBUG: " + e.getMessage());
-
-        ErrorResponse error = new ErrorResponse(e.getMessage(), "INTERNAL_SERVER_ERROR");
-
-        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
 }

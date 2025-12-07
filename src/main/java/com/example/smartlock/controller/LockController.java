@@ -46,21 +46,17 @@ public class LockController {
 
     @PreAuthorize("@lockGuard.check(#lockId, 'OWNER')")
     @DeleteMapping("/{lockId}")
-    public ResponseEntity<LockDto> deleteLock(@PathVariable UUID lockId, Authentication authentication) {
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        UUID userId = userDetails.getId();
+    public ResponseEntity<LockDto> deleteLock(@PathVariable UUID lockId) {
 
-        lockService.deleteLock(lockId, userId);
+        lockService.deleteLock(lockId);
         return ResponseEntity.ok(null);
     }
 
     @PreAuthorize("@lockGuard.check(#lockId, 'ADMIN', 'OWNER')")
     @PutMapping("/{lockId}")
-    public ResponseEntity<LockDto> editLock(@RequestBody EditLockRequest request, Authentication authentication) {
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        UUID userId = userDetails.getId();
+    public ResponseEntity<LockDto> editLock(@RequestBody EditLockRequest request, @PathVariable UUID lockId) {
 
-        LockDto lockDto = lockService.editLock(request, userId);
+        LockDto lockDto = lockService.editLock(request, lockId);
         return ResponseEntity.ok(lockDto);
     }
 

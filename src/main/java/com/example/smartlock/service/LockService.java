@@ -8,6 +8,7 @@ import com.example.smartlock.model.entity.Lock;
 import com.example.smartlock.model.enums.LockStatus;
 import com.example.smartlock.repository.LockRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
@@ -55,12 +56,13 @@ public class LockService {
 
     }
 
-    public void deleteLock(UUID id, UUID userId){
+    @Transactional
+    public void deleteLock(UUID id){
         lockRepository.deleteById(id);
     }
 
-    public LockDto editLock(EditLockRequest request, UUID userId){
-        Lock lock = lockRepository.findById(request.getLockId()).get();
+    public LockDto editLock(EditLockRequest request, UUID lockId){
+        Lock lock = lockRepository.findById(lockId).get();
         lock.setName(request.getName());
 
         return fromLockToDto(

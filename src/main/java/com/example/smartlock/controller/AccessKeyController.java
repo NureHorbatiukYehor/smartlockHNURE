@@ -35,7 +35,6 @@ public class AccessKeyController {
     @PreAuthorize("@lockGuard.check(#lockId, 'ADMIN', 'OWNER')")
     @GetMapping("/lock/{lockId}")
     public ResponseEntity<List<AccessKeyDto>> getAllKeysOnLock(@PathVariable UUID lockId, Authentication authentication) {
-        //TODO check permissions
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         UUID userId = userDetails.getId();
 
@@ -49,10 +48,8 @@ public class AccessKeyController {
         return ResponseEntity.ok(accessKeyDto);
     }
 
-    @PreAuthorize("@lockGuard.check(#lockId, 'ADMIN', 'OWNER')")
     @DeleteMapping("/{keyId}")
     public ResponseEntity<AccessKeyDto> deleteKeyById(@PathVariable UUID keyId, Authentication authentication) {
-        //Todo check permisions
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         UUID userId = userDetails.getId();
 

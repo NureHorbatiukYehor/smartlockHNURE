@@ -4,7 +4,9 @@ import com.example.smartlock.exceptions.exception.AccessKeyNotFoundException;
 import com.example.smartlock.model.dto.accesskey.AccessKeyDto;
 import com.example.smartlock.model.dto.accesskey.CreateKeyRequest;
 import com.example.smartlock.model.entity.AccessKey;
+import com.example.smartlock.model.entity.Lock;
 import com.example.smartlock.repository.AccessKeyRepository;
+import com.example.smartlock.security.LockGuard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,14 +19,16 @@ import java.util.UUID;
 public class AccessKeyService {
     LockService lockService;
     UserService userService;
+    LockGuard lockGuard;
 
     private final AccessKeyRepository accessKeyRepository;
 
     @Autowired
-    public AccessKeyService(LockService lockService, UserService userService, AccessKeyRepository accessKeyRepository) {
+    public AccessKeyService(LockService lockService, UserService userService, AccessKeyRepository accessKeyRepository, LockGuard lockGuard) {
         this.lockService = lockService;
         this.userService = userService;
         this.accessKeyRepository = accessKeyRepository;
+        this.lockGuard = lockGuard;
     }
 
     private AccessKeyDto fromAccessKeyToDto(AccessKey accessKey) {
@@ -68,7 +72,13 @@ public class AccessKeyService {
     }
 
     public void deleteAccessKeyById(UUID id, UUID userId) {
-        //TODO check permissions
-        accessKeyRepository.deleteById(id);
+        AccessKey accessKey = accessKeyRepository.findById(id).orElseThrow(() -> new AccessKeyNotFoundException("No access key with such id"));
+        Lock lock = accessKey.getLock();
+        if (lockGuard.check(lock.getLockId(), "OWNER", "ADMIN")) {
+            accessKeyRepository.deleteById(id);
+        }else {
+            throw new AccessKeyNotFoundException("Permission denied");
+        }
+
     }
 }

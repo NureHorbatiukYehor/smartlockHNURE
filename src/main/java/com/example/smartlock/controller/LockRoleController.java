@@ -25,7 +25,7 @@ public class LockRoleController {
             @PathVariable UUID lockId,
             @PathVariable UUID userId) {
 
-        LockRoleDto lockAccessDto = lockAccessService.addUserToLock(userRole, lockId, userId);
+        LockRoleDto lockAccessDto = lockAccessService.addUserToLock(userRole, userId, lockId);
         return ResponseEntity.ok(lockAccessDto);
     }
 

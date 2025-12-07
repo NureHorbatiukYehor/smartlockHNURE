@@ -9,6 +9,7 @@ import com.example.smartlock.model.enums.UserRole;
 import com.example.smartlock.repository.LockRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class LockRoleService {
     }
 
 
-    public List<LockDto> getAllLocksByUserId(UUID userId){
+    public List<LockDto> getAllLocksByUserId(UUID userId) {
         List<Lock> locks = lockRoleRepository.findAllLockByUser(userService.getUserById(userId));
         List<LockDto> lockDtos = new ArrayList<>();
 
@@ -50,7 +51,7 @@ public class LockRoleService {
 
     public LockRoleDto addUserToLock(UserRole userRole, UUID userId, UUID lockId) {
         return fromLockRoleToDto(
-                lockRoleRepository.save( new LockRole(
+                lockRoleRepository.save(new LockRole(
                                 userService.getUserById(userId),
                                 lockService.getLockById(lockId),
                                 userRole,
@@ -60,8 +61,8 @@ public class LockRoleService {
         );
     }
 
+    @Transactional
     public void deleteUserFromLock(UUID userId, UUID lockId) {
-        //TODO check permissions
         Lock lock = lockService.getLockById(lockId);
         User user = userService.getUserById(userId);
 
