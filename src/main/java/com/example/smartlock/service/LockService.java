@@ -86,8 +86,7 @@ public class LockService {
     }
 
 
-    public LockDto lockLock(UUID lockId, UUID userId) {
-        //TODO IoT client
+    public LockDto lockLock(UUID lockId) {
         Lock lock = lockRepository.findById(lockId).get();
         lock.setLocked(true);
         lock.setLastHeartbeatAt(OffsetDateTime.now());
@@ -96,8 +95,7 @@ public class LockService {
         );
     }
 
-    public LockDto unlockLock(UUID lockId, UUID userId) {
-        //TODO IoT client
+    public LockDto unlockLock(UUID lockId) {
         Lock lock = lockRepository.findById(lockId).get();
         lock.setLocked(false);
         lock.setLastHeartbeatAt(OffsetDateTime.now());

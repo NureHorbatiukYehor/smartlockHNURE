@@ -4,6 +4,7 @@ import com.example.smartlock.model.dto.lock.CreateLockRequest;
 import com.example.smartlock.model.dto.lock.EditLockRequest;
 import com.example.smartlock.model.dto.lock.LockDto;
 import com.example.smartlock.model.entity.CustomUserDetails;
+import com.example.smartlock.model.entity.Lock;
 import com.example.smartlock.model.enums.UserRole;
 import com.example.smartlock.service.LockRoleService;
 import com.example.smartlock.service.LockService;
@@ -62,24 +63,30 @@ public class LockController {
 
     @PreAuthorize("@lockGuard.check(#lockId, 'GUEST', 'MEMBER', 'ADMIN', 'OWNER')")
     @PutMapping("/{lockId}/lock")
-    public ResponseEntity<LockDto> lockLock(@PathVariable UUID lockId, Authentication authentication) {
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        UUID userId = userDetails.getId();
-
-        LockDto lockDto = lockService.lockLock(lockId, userId);
+    public ResponseEntity<LockDto> lockLock(@PathVariable UUID lockId) {
+        LockDto lockDto = lockService.lockLock(lockId);
         return ResponseEntity.ok(lockDto);
     }
 
     @PreAuthorize("@lockGuard.check(#lockId, 'GUEST', 'MEMBER', 'ADMIN', 'OWNER')")
     @PutMapping("/{lockId}/unlock")
-    public ResponseEntity<LockDto> unlockLock(@PathVariable UUID lockId, Authentication authentication) {
-        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        UUID userId = userDetails.getId();
-
-        LockDto lockDto = lockService.unlockLock(lockId, userId);
+    public ResponseEntity<LockDto> unlockLock(@PathVariable UUID lockId) {
+        LockDto lockDto = lockService.unlockLock(lockId);
         return ResponseEntity.ok(lockDto);
     }
 
+    @PreAuthorize("@lockGuard.checkLockSecret(#lockId, #secretKey)")
+    @PutMapping("/{lockId}/{secretKey}/lock")
+    public ResponseEntity<Void> lockBySecret(@PathVariable UUID lockId, @PathVariable String secretKey, @RequestBody String status) {
+        LockDto lockDto = lockService.lockLock(lockId);
+        return ResponseEntity.ok(null);
+    }
 
+    @PreAuthorize("@lockGuard.checkLockSecret(#lockId, #secretKey)")
+    @PutMapping("/{lockId}/{secretKey}/unlock")
+    public ResponseEntity<Void> unlockBySecret(@PathVariable UUID lockId, @PathVariable String secretKey, @RequestBody String status) {
+        LockDto lockDto = lockService.unlockLock(lockId);
+        return ResponseEntity.ok(null);
+    }
 
 }
