@@ -89,4 +89,10 @@ public class LockController {
         return ResponseEntity.ok(null);
     }
 
+    @PreAuthorize("@lockGuard.checkLockSecret(#lockId, #secretKey)")
+    @PutMapping("/{lockId}/{secretKey}/heartbeat")
+    public ResponseEntity<Void> updateHeartbeat(@PathVariable UUID lockId, @PathVariable String secretKey) {
+        lockService.updateHeartbeat(lockId);
+        return ResponseEntity.ok(null);
+    }
 }

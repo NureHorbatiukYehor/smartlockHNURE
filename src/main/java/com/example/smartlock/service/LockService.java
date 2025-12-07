@@ -104,4 +104,11 @@ public class LockService {
         );
     }
 
+    public Void updateHeartbeat(UUID lockId) {
+        Lock lock = lockRepository.findById(lockId).get();
+        lock.setLastHeartbeatAt(OffsetDateTime.now());
+        lockRepository.save(lock);
+        return null;
+    }
+
 }
