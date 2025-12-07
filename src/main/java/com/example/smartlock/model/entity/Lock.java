@@ -53,7 +53,7 @@ public class Lock {
     private OffsetDateTime createdAt;
 
     @Column(name="secret_key", nullable = false, updatable = false)
-    private String SecretKey;
+    private String secretKey;
 
     protected Lock() {
     }
@@ -67,7 +67,7 @@ public class Lock {
         this.isLocked = isLocked;
         this.lastHeartbeatAt = lastHeartbeatAt;
         this.createdAt = createdAt;
-        this.SecretKey = secretKey;
+        this.secretKey = secretKey;
     }
 
     public UUID getLockId() {
@@ -167,10 +167,10 @@ public class Lock {
     }
 
     public String getSecretKey() {
-        return SecretKey;
+        return secretKey;
     }
 
     public void setSecretKey(String secretKey) {
-        SecretKey = secretKey;
+        secretKey = secretKey;
     }
 }

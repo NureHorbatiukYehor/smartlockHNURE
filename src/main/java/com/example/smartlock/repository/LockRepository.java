@@ -8,4 +8,5 @@ import java.util.UUID;
 
 @Repository
 public interface LockRepository extends JpaRepository<Lock, UUID> {
+    boolean existsByLockIdAndSecretKey(UUID lockId, String secretKey);
 }
