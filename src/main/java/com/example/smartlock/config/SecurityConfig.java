@@ -41,7 +41,8 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
                                 "/api/locks/*/secret/**",
-                                "/api/locks/*/heartbeat").permitAll()
+                                "/api/locks/*/heartbeat",
+                                "/api/locks/*/isLocked").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

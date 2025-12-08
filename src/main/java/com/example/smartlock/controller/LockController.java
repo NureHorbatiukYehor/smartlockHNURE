@@ -97,7 +97,7 @@ public class LockController {
     }
 
     @PreAuthorize("@lockGuard.checkLockSecret(#lockId)")
-    @PutMapping("/{lockId}/isLocked")
+    @GetMapping("/{lockId}/isLocked")
     public ResponseEntity<Boolean> isLocked(@PathVariable UUID lockId) {
         return ResponseEntity.ok(lockService.isLockedById(lockId));
     }
