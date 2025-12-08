@@ -109,4 +109,9 @@ public class LockService {
         return null;
     }
 
+
+    public boolean isLockedById(UUID lockId) {
+        Lock lock = lockRepository.findById(lockId).orElseThrow(()-> new LockNotFoundException("No lock with such id"));
+        return lock.isLocked();
+    }
 }

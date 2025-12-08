@@ -42,8 +42,10 @@ public class LockGuard {
 
     public boolean checkLockSecret(UUID lockId) {
         String incomingSecret = request.getHeader("Device-Secret");
+        System.out.println("DEBUG: LOCK ID: " + lockId + " SECRET: " + incomingSecret);
         if (incomingSecret == null || incomingSecret.isBlank()) return false;
-
-        return lockRepository.existsByLockIdAndSecretKey(lockId, incomingSecret);
+        boolean debug = lockRepository.existsByLockIdAndSecretKey(lockId, incomingSecret);
+        System.out.println("DEBUG: LOCK ID: " + lockId + " SECRET CHECK: " + debug);
+        return debug;
     }
 }

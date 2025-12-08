@@ -95,4 +95,11 @@ public class LockController {
         lockService.updateHeartbeat(lockId);
         return ResponseEntity.noContent().build();
     }
+
+    @PreAuthorize("@lockGuard.checkLockSecret(#lockId)")
+    @PutMapping("/{lockId}/isLocked")
+    public ResponseEntity<Boolean> isLocked(@PathVariable UUID lockId) {
+        return ResponseEntity.ok(lockService.isLockedById(lockId));
+    }
+
 }
