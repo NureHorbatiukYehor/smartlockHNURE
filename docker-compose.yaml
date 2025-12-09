@@ -5,8 +5,8 @@ services:
     image: postgres:17
     container_name: smartlock-db
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 2006
+      DB_USERNAME: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: smartlock
     ports:
       - "5432:5432"
@@ -25,8 +25,9 @@ services:
       - postgres
     environment:
       DB_URL: jdbc:postgresql://postgres:5432/smartlock
-      DB_USERNAME: postgres
-      DB_PASSWORD: 2006
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
     networks:
       - app-network
 
