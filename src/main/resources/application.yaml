@@ -3,16 +3,16 @@ spring:
     name: smartlock
   security:
     jwt:
-      secret: Z2tzZG9qZ21kc3BvZ2pzcG9namtkczlnZTNyeWRhc2Q7YXNwazMyMTQwb3Jqa3dlZ2lwbmRza2ZhcztsZGthc3Bkb2FzbGRwYXNsZA==
+      secret: ${JWT_SECRET}
       expiration: 86400000
 
   datasource:
 
-    url: jdbc:postgresql://localhost:5432/smartlock
+    url: ${DB_URL}
 
-    username: postgres
+    username: ${DB_USER}
 
-    password: 2006
+    password: ${DB_PASSWORD}
 
     driver-class-name: org.postgresql.Driver
 
