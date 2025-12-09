@@ -12,7 +12,7 @@ public class ActivityLog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "log_id")
-    private BigInteger logId;
+    private Long logId;
 
     @ManyToOne
     @JoinColumn(name = "lock_id")
@@ -39,7 +39,7 @@ public class ActivityLog {
 
     protected ActivityLog() {}
 
-    public ActivityLog(BigInteger logId, Lock lock, User userId, AccessKey accessKey, OffsetDateTime timestamp, String details, ActionType actionType) {
+    public ActivityLog(Long logId, Lock lock, User userId, AccessKey accessKey, OffsetDateTime timestamp, String details, ActionType actionType) {
         this.logId = logId;
         this.actorLock = lock;
         this.actorUser = userId;
@@ -49,11 +49,11 @@ public class ActivityLog {
         this.actionType = actionType;
     }
 
-    public BigInteger getLogId() {
+    public Long getLogId() {
         return logId;
     }
 
-    public void setLogId(BigInteger logId) {
+    public void setLogId(Long logId) {
         this.logId = logId;
     }
 

@@ -25,4 +25,4 @@ spring:
       ddl-auto: validate
 
   flyway:
-    location: classpath:db/migration
+    locations: classpath:db/migration
