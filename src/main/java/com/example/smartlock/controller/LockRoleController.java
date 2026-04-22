@@ -1,5 +1,6 @@
 package com.example.smartlock.controller;
 
+import com.example.smartlock.model.dto.lockrole.EditLockRoleRequest;
 import com.example.smartlock.model.dto.lockrole.LockRoleDto;
 import com.example.smartlock.model.enums.UserRole;
 import com.example.smartlock.service.LockRoleService;
@@ -7,44 +8,48 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/locks/{lockId}/roles/{userId}")
+@RequestMapping("/api/locks/{lockId}/roles")
 public class LockRoleController {
-    LockRoleService lockAccessService;
+    LockRoleService lockRoleService;
 
-    public LockRoleController(LockRoleService lockAccessService) {
-        this.lockAccessService = lockAccessService;
+    public LockRoleController(LockRoleService lockRoleService) {
+        this.lockRoleService = lockRoleService;
     }
 
     @PreAuthorize("@lockGuard.check(#lockId, 'ADMIN', 'OWNER')")
     @PostMapping
     public ResponseEntity<LockRoleDto> addUserToLock(
-            @RequestBody UserRole userRole,
-            @PathVariable UUID lockId,
-            @PathVariable UUID userId) {
+            @RequestBody EditLockRoleRequest editLockRoleRequest,
+            @PathVariable UUID lockId) {
 
-        LockRoleDto lockAccessDto = lockAccessService.addUserToLock(userRole, userId, lockId);
+        LockRoleDto lockAccessDto = lockRoleService.addUserToLock(editLockRoleRequest, lockId);
         return ResponseEntity.ok(lockAccessDto);
     }
 
     @PreAuthorize("@lockGuard.check(#lockId, 'ADMIN', 'OWNER')")
     @DeleteMapping
-    public ResponseEntity<Void> deleteUserFromLock( @PathVariable UUID lockId, @PathVariable UUID userId) {
-        lockAccessService.deleteUserFromLock(userId, lockId);
+    public ResponseEntity<Void> deleteUserFromLock( @PathVariable UUID lockId, @RequestBody String email) {
+        lockRoleService.deleteUserFromLock(email, lockId);
         return ResponseEntity.ok(null);
     }
 
     @PreAuthorize("@lockGuard.check(#lockId, 'OWNER')")
     @PutMapping
-    public ResponseEntity<LockRoleDto> changeUserLockRole(
-            @RequestBody UserRole lockRole,
-            @PathVariable UUID lockId,
-            @PathVariable UUID userId) {
+    public ResponseEntity<LockRoleDto> editUserLockRole(
+            @RequestBody EditLockRoleRequest editLockRoleRequest,
+            @PathVariable UUID lockId) {
 
 
-       LockRoleDto lockRoleDto = lockAccessService.changeUserLockRole(userId, lockId, lockRole);
+       LockRoleDto lockRoleDto = lockRoleService.changeUserLockRole(editLockRoleRequest, lockId);
         return ResponseEntity.ok(lockRoleDto);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<LockRoleDto>> findUsersOnLock(@PathVariable UUID lockId) {
+        return ResponseEntity.ok(lockRoleService.getAllUsersOnLock(lockId));
     }
 }

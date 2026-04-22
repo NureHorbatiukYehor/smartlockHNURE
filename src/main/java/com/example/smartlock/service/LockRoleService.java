@@ -1,6 +1,7 @@
 package com.example.smartlock.service;
 
 import com.example.smartlock.model.dto.lock.LockDto;
+import com.example.smartlock.model.dto.lockrole.EditLockRoleRequest;
 import com.example.smartlock.model.dto.lockrole.LockRoleDto;
 import com.example.smartlock.model.entity.Lock;
 import com.example.smartlock.model.entity.LockRole;
@@ -29,14 +30,14 @@ public class LockRoleService {
         this.userService = userService;
     }
 
-    public LockRoleDto fromLockRoleToDto(LockRole lockAccess) {
+    public LockRoleDto fromLockRoleToDto(LockRole lockrole) {
         return new LockRoleDto(
-                lockAccess.getLock().getLockId(),
-                lockAccess.getUser().getUserId(),
-                lockAccess.getLockRole()
+                lockrole.getUser().getEmail(),
+                lockrole.getLock().getLockId(),
+                lockrole.getUser().getUserId(),
+                lockrole.getLockRole()
         );
     }
-
 
     public List<LockDto> getAllLocksByUserId(UUID userId) {
         List<Lock> locks = lockRoleRepository.findAllLockByUser(userService.getUserById(userId));
@@ -49,12 +50,14 @@ public class LockRoleService {
         return lockDtos;
     }
 
-    public LockRoleDto addUserToLock(UserRole userRole, UUID userId, UUID lockId) {
+    public LockRoleDto addUserToLock(EditLockRoleRequest editLockRoleRequest, UUID lockId) {
+        UUID userId = userService.getUserByEmail(editLockRoleRequest.getEmail()).orElseThrow().getUserId();
+
         return fromLockRoleToDto(
                 lockRoleRepository.save(new LockRole(
                                 userService.getUserById(userId),
                                 lockService.getLockById(lockId),
-                                userRole,
+                                editLockRoleRequest.getLockrole(),
                                 OffsetDateTime.now()
                         )
                 )
@@ -62,23 +65,33 @@ public class LockRoleService {
     }
 
     @Transactional
-    public void deleteUserFromLock(UUID userId, UUID lockId) {
+    public void deleteUserFromLock(String email, UUID lockId) {
         Lock lock = lockService.getLockById(lockId);
-        User user = userService.getUserById(userId);
+        User user = userService.getUserByEmail(email).orElseThrow();
 
         lockRoleRepository.deleteByUserAndLock(user, lock);
     }
 
-    public LockRoleDto changeUserLockRole(UUID userId, UUID lockId, UserRole userRole) {
-        //TODO check permissions
+    public LockRoleDto changeUserLockRole(EditLockRoleRequest editLockRoleRequest, UUID lockId) {
         Lock lock = lockService.getLockById(lockId);
-        User user = userService.getUserById(userId);
+        User user = userService.getUserByEmail(editLockRoleRequest.getEmail()).orElseThrow();
 
         LockRole lockRole = lockRoleRepository.findByLockAndUser(lock, user);
-        lockRole.setLockRole(userRole);
+        lockRole.setLockRole(editLockRoleRequest.getLockrole());
 
         return fromLockRoleToDto(
                 lockRoleRepository.save(lockRole)
         );
+    }
+
+
+    public List<LockRoleDto> getAllUsersOnLock(UUID lockId) {
+        List<LockRoleDto> dtos = new ArrayList<>();
+        List<LockRole> listLockRole = lockRoleRepository.findAllByLockId(lockId);
+
+        for (LockRole lockRole : listLockRole) {
+            dtos.add(fromLockRoleToDto(lockRole));
+        }
+        return dtos;
     }
 }

@@ -3,6 +3,7 @@ package com.example.smartlock.controller;
 import com.example.smartlock.model.dto.lock.CreateLockRequest;
 import com.example.smartlock.model.dto.lock.EditLockRequest;
 import com.example.smartlock.model.dto.lock.LockDto;
+import com.example.smartlock.model.dto.lockrole.LockRoleDto;
 import com.example.smartlock.model.entity.CustomUserDetails;
 import com.example.smartlock.model.entity.Lock;
 import com.example.smartlock.model.enums.UserRole;
