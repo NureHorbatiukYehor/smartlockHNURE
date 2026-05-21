@@ -19,5 +19,5 @@ public interface LockRoleRepository extends JpaRepository <LockRole, UUID>{
     public void deleteByUserAndLock(User user, Lock lock);
     boolean existsByUserUserIdAndLockLockIdAndLockRoleIn(UUID userId, UUID lockId, Collection<String> LockRoles);
 
-    List<LockRole> findAllByLockId(UUID id);
+    List<LockRole> findAllByLockLockId(UUID id);
 }

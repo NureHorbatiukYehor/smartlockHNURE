@@ -64,6 +64,18 @@ public class LockRoleService {
         );
     }
 
+    public void addUserToLock(UserRole userRole, UUID userId, UUID lockId) {
+        fromLockRoleToDto(
+                lockRoleRepository.save(new LockRole(
+                                userService.getUserById(userId),
+                                lockService.getLockById(lockId),
+                                userRole,
+                                OffsetDateTime.now()
+                        )
+                )
+        );
+    }
+
     @Transactional
     public void deleteUserFromLock(String email, UUID lockId) {
         Lock lock = lockService.getLockById(lockId);
@@ -87,11 +99,13 @@ public class LockRoleService {
 
     public List<LockRoleDto> getAllUsersOnLock(UUID lockId) {
         List<LockRoleDto> dtos = new ArrayList<>();
-        List<LockRole> listLockRole = lockRoleRepository.findAllByLockId(lockId);
+        List<LockRole> listLockRole = lockRoleRepository.findAllByLockLockId(lockId);
 
         for (LockRole lockRole : listLockRole) {
             dtos.add(fromLockRoleToDto(lockRole));
         }
         return dtos;
     }
+
+
 }

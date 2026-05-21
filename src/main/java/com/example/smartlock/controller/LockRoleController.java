@@ -31,8 +31,8 @@ public class LockRoleController {
     }
 
     @PreAuthorize("@lockGuard.check(#lockId, 'ADMIN', 'OWNER')")
-    @DeleteMapping
-    public ResponseEntity<Void> deleteUserFromLock( @PathVariable UUID lockId, @RequestBody String email) {
+    @DeleteMapping("/{email}")
+    public ResponseEntity<Void> deleteUserFromLock( @PathVariable UUID lockId, @PathVariable String email) {
         lockRoleService.deleteUserFromLock(email, lockId);
         return ResponseEntity.ok(null);
     }
