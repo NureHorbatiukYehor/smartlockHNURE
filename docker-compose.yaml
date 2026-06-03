@@ -5,8 +5,8 @@ services:
     image: postgres:17
     container_name: smartlock-db
     environment:
-      DB_USERNAME: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USER}        # ✓ Верно
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: smartlock
     ports:
       - "5433:5432"
