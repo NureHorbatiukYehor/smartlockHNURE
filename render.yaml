@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: spring-backend
+    env: docker
+    repo: https://github.com/NureHorbatiukYehor/smartlockHNURE
+    plan: free
+    region: frankfurt
+    scaling:
+      minInstances: 0
+      maxInstances: 3
+      targetCPUPercent: 60
+      
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod 
+
+      - key: SPRING_DATASOURCE_URL
+        sync: false
+      - key: SPRING_DATASOURCE_USERNAME
+        sync: false
+      - key: SPRING_DATASOURCE_PASSWORD
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+
+databases:
+  - name: postgres-db
+    plan: free
+    region: frankfurt
